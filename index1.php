@@ -1,20 +1,20 @@
-<?php
-$servername = "3306"; // of je specifieke hostnaam
-$username = "root";
-$password = "Mashal123@";
-$dbname = "Winkel";
+$host = '127.0.0.1';
+$db   = 'test';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
 
-// Maak de verbinding
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Controleer de verbinding
-if ($conn->connect_error) {
-    die("Kan geen verbinding maken met de database: " . $conn->connect_error);
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
+try 
+{
+     $pdo = new PDO($dsn, $user, $pass, $options);
+} 
+catch (\PDOException $e) 
+{
+     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
-
-// Echo de verbonden tekst
-echo "Connected to database ($dbname).";
-
-// Sluit de verbinding
-$conn->close();
-?>
